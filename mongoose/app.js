@@ -45,4 +45,29 @@ const getDocument = async ()=>{
     const result = await Playlist.find().select("name");
     console.log(result);
 }
-getDocument();
+// getDocument();
+const updateDocument = async(_id)=>{
+    try{
+        const result = await Playlist.updateOne({_id},{
+            $set:{
+                name:"Sohel khan"
+            }
+        });
+        console.log(result);
+    }catch(err){
+        console.log(err);
+    }
+}
+// updateDocument("6050a3e72a0a7f31242b5ee9");
+
+const deleteDocument = async(_id)=>{
+    try{
+
+        const result = await Playlist.findByIdAndDelete({_id});
+        console.log(result);
+    }catch(err){
+        console.log(err);
+    }
+
+}
+deleteDocument("6050a8c1b1a3e53532f24615");
