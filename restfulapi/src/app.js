@@ -13,7 +13,7 @@ app.get('/students',async (req,res)=>{
    }
 
 })
-app.get("/students/:name",async(req,res)=>{
+app.get("/students/:id",async(req,res)=>{
     try{
         const _id=req.params.name;
    const studentData  = await Student.findOne({_id});
@@ -48,6 +48,33 @@ app.post('/students',async (req,res)=>{
             res.status(400).send(e);
         }
 })
+
+app.patch("/students/:id",async(req,res)=>{
+    try{
+        const _id = req.params.id;
+        const updateStudent= await Student.findByIdAndUpdate(_id,req.body,{
+            new:true
+        });
+        console.log(updateStudent);
+    res.send(updateStudent);
+    }catch(e){
+        res.status(404).send(e);
+    }
+})
+app.delete("/students/:id",async(req,res)=>{
+
+try {
+const deletStudent  = await Student.findByIdAndDelete(req.params.id);
+if(!req.params.id){
+    return res.status(404).send();
+}
+res.send(deletStudent);
+} catch (error) {
+    console.log(error);
+    res.send(e);
+}
+})
+
 app.listen(port,()=>{
     console.log(`connection is setup at ${port}`);
 })
